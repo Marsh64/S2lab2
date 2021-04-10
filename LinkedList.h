@@ -1,3 +1,4 @@
+#ifndef LinkedList
 
 template <class T>
 class LinkedList {
@@ -31,3 +32,5 @@ public:
     void InsertAt(T item, int index); //Вставка элемента в заданную позицию
     LinkedList<T>* Concat(LinkedList<T> *list); //Сцепляет два списка
 };
+
+#endif

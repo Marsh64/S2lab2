@@ -43,9 +43,16 @@ void DynamicArray<T>::Resize(int newSize) {
         }
         delete[] array;
         size = newSize;
+        len = newSize;
         array = new_array;
         return;
     }// увеличение длины
+}
+template <class T>
+DynamicArray<T>::DynamicArray() {
+    array = nullptr;
+    len = 0;
+    size = 0;
 }
 
 template <class T>
@@ -71,7 +78,7 @@ DynamicArray<T>::DynamicArray(int newSize){
 }
 
 template <class T>
-DynamicArray<T>::DynamicArray(const DynamicArray<T> &dynamicArray) {
+DynamicArray<T>::DynamicArray(DynamicArray<T> const &dynamicArray) {
     array = nullptr;
     size = 0;
     len = 0;
@@ -106,5 +113,20 @@ void DynamicArray<T>::Set(int index, T value) {
     array[index] = value;
 }
 
+template <class T>
+void DynamicArray<T> :: Delete_DynamicArray(){
+    delete[] array;
+    array = nullptr;
+    size = 0;
+    len = 0;
+}
+
+template <class T>
+DynamicArray<T> :: ~DynamicArray(){
+    delete[] array;
+    array = nullptr;
+    size = 0;
+    len = 0;
+}
 
 

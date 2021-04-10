@@ -1,3 +1,5 @@
+#ifndef ArraySequence
+
 #include "Sequence.h"
 #include "DynamicArray.h"
 
@@ -35,7 +37,7 @@ public:
         }
 
         auto *new_arraySequence = new ArraySequence<T>;
-        new_arraySequence = ArraySequence<T>();
+//        new_arraySequence = ArraySequence<T>();
         int iter;
         if (startIndex < endIndex){
             iter = 1;
@@ -83,9 +85,9 @@ public:
             saved_cell = this_cell;
         }
     }//Вставляет элемент по заданному индексу
-    ArraySequence<T>* Concat(ArraySequence<T> *list){
+    ArraySequence<T>* Concat(Sequence<T> *list){
         auto *new_arraySequence = new ArraySequence<T>;
-        new_arraySequence = ArraySequence<T>();
+        //new_arraySequence = ArraySequence<T>();
 
         for (int i = 0; i < arraySequence.GetLen(); i++){
             new_arraySequence->Append(arraySequence.Get(i));
@@ -98,3 +100,4 @@ public:
     }//Сцепляет две последовательности
 };
 
+#endif

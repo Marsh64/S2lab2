@@ -1,6 +1,8 @@
 #include "Sequence.h"
 #include "LinkedList.h"
 
+#ifndef LinkedListSequence
+
 template <class T>
 class LinkedListSequence : Sequence<T>{
 private:
@@ -54,3 +56,5 @@ public:
         return new_LinkedList;
     }//Сцепляет два списка
 };
+
+#endif
