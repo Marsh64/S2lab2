@@ -12,6 +12,11 @@ void GetLen_DA();
 void Set_DA();
 void Resize_DA();
 
+//Проверка LinkedList
+void constructor_1_LL();
+void constructor_2_LL();
+void constructor_3_LL();
+
 
 void AllTests();
 #endif //LABORATORY_WORK_2_ALLTESTS_H

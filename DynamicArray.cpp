@@ -11,7 +11,7 @@ void DynamicArray<T>::Copy_array(T* array_from, T* array_to, int count){
 }
 */
 template <class T>
-void DynamicArray<T>::Resize(int newSize) {
+void DynamicArray<T>::Resize(int newSize){
     if (newSize < 0){throw IndexOutOfRange();}// неправильный размер массива
 
     if (newSize == 0){
@@ -36,6 +36,13 @@ void DynamicArray<T>::Resize(int newSize) {
         return;
     }// укорачивание массива
 
+    if (newSize > 0 && size == 0){
+        T *new_array = new T[newSize];
+        delete[] array;
+        size = newSize;
+        array = new_array;
+    }//увеличение размера массива 0 длины
+
     if (newSize > size){
         T *new_array = new T[newSize];
         for (int i = 0; i < len; i++){
@@ -43,11 +50,12 @@ void DynamicArray<T>::Resize(int newSize) {
         }
         delete[] array;
         size = newSize;
-        len = newSize;
+        //len = newSize; //это надо убрать
         array = new_array;
         return;
     }// увеличение длины
 }
+
 template <class T>
 DynamicArray<T>::DynamicArray() {
     array = nullptr;
@@ -59,7 +67,7 @@ template <class T>
 DynamicArray<T>::DynamicArray(T *items, int count) {
     array = nullptr;
     size = 0;
-    len = 0;
+    len = count;
 
     Resize(count);
     for (int i = 0; i < count; i++){
@@ -81,7 +89,7 @@ template <class T>
 DynamicArray<T>::DynamicArray(DynamicArray<T> const &dynamicArray) {
     array = nullptr;
     size = 0;
-    len = 0;
+    len = dynamicArray.len;
     Resize(dynamicArray.size);
 
     for (int i = 0; i < len; i++){

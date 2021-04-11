@@ -3,6 +3,8 @@
 #include "iostream"
 #include "DynamicArray.h"
 #include "DynamicArray.cpp"
+#include "LinkedList.h"
+//#include "LinkedList.cpp"
 
 void constructor_1_DA(){
     int arr[] = {1, 2, 3, 4, 5};
@@ -12,7 +14,7 @@ void constructor_1_DA(){
     assert(d.Get(3) == 4);
     d.Resize(8);
     assert(d.GetSize() == 8);
-    assert(d.GetLen() == 8);
+    assert(d.GetLen() == 5);
     d.Set(3, 10);
     assert(d.Get(3) == 10);
     d.Resize(0);
@@ -23,6 +25,7 @@ void constructor_1_DA(){
 void constructor_2_DA(){
     DynamicArray<int> arr(10);
     assert(arr.GetSize() == 10);
+    assert(arr.GetLen() == 0);
     arr.Delete_DynamicArray();
 }
 void constructor_3_DA(){
@@ -75,9 +78,21 @@ void Resize_DA(){
     assert(d.GetSize() == 5);
     d.Resize(10);
     assert(d.GetSize() == 10);
+    assert(d.GetLen() == 5);
     d.Delete_DynamicArray();
-    std::cout << "все ок c опреациями" << std::endl;
 }
+
+/*
+void constructor_1_LL(){
+    float arr[] = {5.5, 6.6, -7.8, -9.9, 0};
+    LinkedList<float> list(arr, 5);
+    assert(list.GetLength() == 5);
+    assert(list.Get(2) == 6.6);
+    cout << "1" << endl;
+}
+*/
+
+
 
 void AllTests(){
     constructor_1_DA();
@@ -89,5 +104,9 @@ void AllTests(){
     GetLen_DA();
     Set_DA();
     Resize_DA();
+    cout << "с DynamicArray все хорошо" << endl;
+
+    //constructor_1_LL();
+
 
 }

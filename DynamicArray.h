@@ -20,8 +20,8 @@ public:
     DynamicArray(); //создание пустого массива
 
     //Удаление объекта
-    ~DynamicArray();
-    void Delete_DynamicArray();
+    ~DynamicArray();//деконструктор
+    void Delete_DynamicArray();//операция удаления массива
 
     //Декомпозиция
     T Get(int index);//возвращает элемент по индексу
