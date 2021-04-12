@@ -81,7 +81,7 @@ LinkedList<T> LinkedList<T>::GetSubList(int startIndex, int endIndex) {
     auto *cell = new struct element;
     cell = head_element;
     for (int i = 0; i < startIndex; i++, cell = cell->next_element);
-    for (int i = startIndex; i < endIndex; i++, cell = cell->next_element){
+    for (int i = startIndex; i <= endIndex; i++, cell = cell->next_element){
         new_list.Append(cell->value);
     }
 
@@ -125,7 +125,7 @@ void LinkedList<T>::InsertAt(T item, int index) {
 }
 
 template<class T>
-LinkedList<T> * LinkedList<T>::Concat(LinkedList<T> *list) {
+LinkedList<T> LinkedList<T>::Concat(LinkedList<T> *list) {
     LinkedList<T> new_list = LinkedList<T>();
 
     struct element *new_cell = head_element;
@@ -138,5 +138,22 @@ LinkedList<T> * LinkedList<T>::Concat(LinkedList<T> *list) {
         new_list.Append(new_cell->value);
     }
 
-    return &new_cell;
+    return new_list;
+}
+
+template<class T>
+LinkedList<T> :: ~LinkedList(){
+    Delete_LinkedList();
+}
+
+template <class T>
+void LinkedList<T> :: Delete_LinkedList() {
+    struct element* this_cell = nullptr;
+    while(head_element != nullptr){
+        this_cell = head_element;
+        head_element = head_element->next_element;
+        delete this_cell;
+    }
+    end_element = nullptr;
+    len = 0;
 }
