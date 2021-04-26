@@ -62,7 +62,7 @@ T LinkedList<T>::GetLast() {
 }
 
 template <class T>
-T LinkedList<T>::Get(int index) {
+T& LinkedList<T>::Get(int index) {
     if (index < 0 || index >= len){throw IndexOutOfRange();}
 
     struct element *cell = head_element;
@@ -148,7 +148,7 @@ LinkedList<T> :: ~LinkedList(){
 
 template <class T>
 void LinkedList<T> :: Delete_LinkedList() {
-    struct element* this_cell = nullptr;
+    struct element* this_cell;
     while(head_element != nullptr){
         this_cell = head_element;
         head_element = head_element->next_element;

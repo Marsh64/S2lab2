@@ -1,15 +1,7 @@
 #include "DynamicArray.h"
-#include <iostream>
+
 using namespace std;
 
-/*
-template <class T>
-void DynamicArray<T>::Copy_array(T* array_from, T* array_to, int count){
-    for (int i = 0; i < count; i++){
-        array_to[i] = array_from[i];
-    }
-}
-*/
 template <class T>
 void DynamicArray<T>::Resize(int newSize){
     if (newSize < 0){throw IndexOutOfRange();}// неправильный размер массива
@@ -50,10 +42,15 @@ void DynamicArray<T>::Resize(int newSize){
         }
         delete[] array;
         size = newSize;
-        //len = newSize; //это надо убрать
         array = new_array;
         return;
     }// увеличение длины
+}
+
+template <class T>
+void DynamicArray<T>::Relen(int newLen){
+    if (newLen > size || newLen < 0 || newLen < len){throw IndexOutOfRange();}
+    len = newLen;
 }
 
 template <class T>
@@ -98,7 +95,7 @@ DynamicArray<T>::DynamicArray(DynamicArray<T> const &dynamicArray) {
 }
 
 template <class T>
-T DynamicArray<T>::Get(int index) {
+T& DynamicArray<T>::Get(int index) {
     if (index < 0 || index >= len){throw IndexOutOfRange();}
 
     return array[index];
@@ -136,5 +133,3 @@ DynamicArray<T> :: ~DynamicArray(){
     size = 0;
     len = 0;
 }
-
-

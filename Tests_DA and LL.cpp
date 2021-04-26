@@ -1,10 +1,10 @@
 #include "Tests_DA and LL.h"
 #include <cassert>
 #include "iostream"
-#include "DynamicArray.h"
-#include "DynamicArray.cpp"
-#include "LinkedList.h"
-#include "LinkedList.cpp"
+#include "../Base/DynamicArray.h"
+#include "../Base/DynamicArray.cpp"
+#include "../Base/LinkedList.h"
+#include "../Base/LinkedList.cpp"
 
 float round_float(float a, int order){
     for (int i = 0; i < order; i++){
