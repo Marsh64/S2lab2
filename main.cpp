@@ -1,119 +1,62 @@
-#include "Base/DynamicArray.cpp"
-#include "Sequence/ArraySequence.cpp"
 #include <iostream>
-//#include "LinkedListSequence.h"
-//#include "ArraySequence.h"
-//#include "DynamicArray.hpp"
-//#include "AllTests.cpp"
-#include "Base/LinkedList.cpp"
-#include "Tests/Tests_DA and LL.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "MenuAll.h"
-#include "Tests/Tests_AS and LLS.h"
-using namespace std;
-
-/*
-ostream &operator << (ostream &cout, complex<float> num) {
-    cout << num.real();
-    if (num.imag() == 0) return cout;
-
-    if (num.imag() < 0) {
-        cout << num.imag();
-    }
-    else {
-        cout << '+' << num.imag();
-    }
-
-    return cout << 'i';
-}
-*/
-
+//#include "IHashTableHARD.h"
+#include "IDictionary.h"
+#include "string"
+#include "BarGraph.h"
+#include "ArraySequence.h"
+#include "Indexing.h"
+#include "Caching.h"
 int main() {
-    Tests_DA_LL();
 
-    constructors_AS();
-    decomposition_AS();
-    function_AS();
-    constructors_LLS();
-    decomposition_LLS();
-    function_LLS();
+    Dictionary<std::string,int> dick;
+    int cost1 = 2500;
+    int cost2 = 2600;
+    int cost3 = 2700;
+    int cost4 = 2800;
+    int cost5 = 2900;
 
-    menuAll();
+    int a[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,28,29,30};
 
+    for (int i = 1; i < 30; i++){
+        dick.Add("car", a[i]);
+    }
+    dick.Add("car1", cost1);
+    dick.Add("car2", cost2);
+    dick.Add("car3", cost3);
+    dick.Add("car4", cost4);
+    dick.Add("car5", cost5);
+
+    Person p1("a", "b", 100);
+    BarGraph graph;
+    Sequence<Person> list();
+    list().Append(p1);
+
+    Dictionary<std::string, int> bargraph(graph.SplittingByName(*list, SignsToHashByName(Person)));
+    //IHashTable<std::string> map();
+
+    //bool b = map().Add(a);
+    //std::cout << map().Find(a) << std::endl;
+    //std::cout << map().Find(b) << std::endl;
     /*
-    ArraySequence<Vector<int>> sequence;
-
-    int arr1[] = {1, 2, 3};
-    Vector<int> vector(arr1, 3);
-
-    sequence.Append(vector);
-    cout << vector << ' ' << sequence.Get(0) << endl;
-    /*
-    int arr2[] = {2, 3, 4};
-    int arr3[] = {3, 4, 5};
-    int *arr[] = {arr1, arr2, arr3};
-
-    Matrix<int> mat1;
-    Matrix<int> mat2(arr, 3);
-    Matrix<int> mat3(mat2);
-    Matrix<int> mat4(mat2.MultOfMatrix(3));
-
-    cout << mat2 << endl;
-    mat2.ElemTransformOfLines(0, 1, 2);
-    cout << mat2 << endl;
-    /*
-    cout << mat1.GetSize() << endl;
-    cout << mat2.GetSize() << endl;
-    cout << mat4.GetSize() << endl;
-    cout << mat2.Get(2, 1) << endl;
-    cout << mat4.Get(2, 1) << endl;
-    */
+    std::cout << "Hello, World!" << std::endl;
+    std::cout << dick.ContainsKey("car") << std::endl;
+    std::cout << dick.ContainsKey("car3") << std::endl;
+    std::cout << dick.ContainsKey("car6") << std::endl;
 
 
-
-    /*
-    int arr1[] = {1, 2, 3, 4, 5};
-    int arr2[] = {2, 3, 4, 5, 6};
-    complex<float> k1(4, 5);
-    complex<float> k2(6, 8);
-    cout << k1 + k1 << endl << k1 - k2 << endl << k1 * k2 << endl << k1 / k2 << endl;
-    //DynamicArray<int> da1(arr1, 5);
-    //DynamicArray<int> da2(arr2, 5);
-    //ArraySequence<int> as1(arr1, 5);
-    //ArraySequence<int> as2(arr2, 5);
-    //cout << as2.GetLength() << endl;
-    //as2.Append(5);
-    //cout << as2.GetLength() << endl;
-    //cout << as2.Get(5) << endl;
-    //DynamicArray<int> da3;
-
-    Vector<int> vec1(arr1, 5);
-    Vector<int> vec2(arr2, 5);
-
-    //Vector<int> vector3;
-
-    Vector<int> vec3(vec1.SubOfVectors(vec2));
-    Vector<int> vec4(vec1.SumOfVectors(vec2));
-    Vector<int> vec5(vec1.MulOfVectors(5));
+    std::cout << dick.GetCapasity() << std::endl;
+    std::cout << dick.GetCollumn() << std::endl;
 
 
-    cout << vec1.GetCoord(2) << endl;
-    cout << vec1 << endl;
-    cout << vec2 << endl;
-    cout << vec3 << endl;
-    cout << vec4 << endl;
-    cout << vec5 << endl;
-    cout << vec1.ScalarMulOfVectors(vec2) << endl;
+    std::cout << dick.GetOne("car") << std::endl;
+    std::cout << dick.GetOne("car1") << std::endl;
+    std::cout << dick.GetOne("car2") << std::endl;
+    std::cout << dick.GetOne("car3") << std::endl;
+    std::cout << dick.GetOne("car4") << std::endl;
+    std::cout << dick.GetOne("car5") << std::endl;
+     */
 
-    /*
-    float arr[] = {5.5, 6.6, -7.8, -9.9, 0};
-    LinkedList<float> list;
-    cout << list.GetLength() << endl;
-    LinkedList<float> list1(arr, 5);
-    cout << list1.GetLength() << endl;
-    cout << list1.Get(2) << endl;
-    */
-    cout << "Hello, World!" << endl;
+    //std::cout << dick. << std::endl;
+    std::cout << "Hello, World!" << std::endl;
     return 0;
 }

@@ -1,62 +1,66 @@
+//
+// Created by adm on 24.10.2021.
+//
+
 #include "DynamicArray.h"
-
-using namespace std;
-
 template <class T>
-void DynamicArray<T>::Resize(int newSize){
-    if (newSize < 0){throw IndexOutOfRange();}// неправильный размер массива
+void DynamicArray<T>::Resize(int newLenght /* подразумевается место для пользователя*/){
+    int ConstMemory = int(0.25 * newLenght); //будем увеличивать память пачками
 
-    if (newSize == 0){
+    if (newLenght < 0){
+        throw IndexOutOfRange();
+    }// неправильный размер массива
+
+    if (newLenght == 0){
         delete[] array;
         array = nullptr;
         size = 0;
-        len = 0;
+        lenght = 0;
         return;
     }// удаление массива
 
-    if (newSize == size){return;}// длина не изменится
+    if (newLenght == lenght){return;}// длина не изменится
 
-    if (newSize < size){
-        T *new_array = new T[newSize];
-        for (int i = 0; i < newSize; i++){
-            new_array[i] = array[i];
+    if (newLenght < lenght){
+        for (int i = newLenght; i < lenght; i++){
+            array[i] = nullptr;
         }
-        delete[] array;
-        size = newSize;
-        if (len > newSize){len = newSize;}
-        array = new_array;
+
+        lenght = newLenght;
         return;
     }// укорачивание массива
 
-    if (newSize > 0 && size == 0){
-        T *new_array = new T[newSize];
+    if (newLenght > 0 && lenght == 0){
+        T *new_array = new T[newLenght + ConstMemory];
         delete[] array;
-        size = newSize;
+        lenght = newLenght;
+        size = newLenght + ConstMemory;
         array = new_array;
+        return;
     }//увеличение размера массива 0 длины
 
-    if (newSize > size){
-        T *new_array = new T[newSize];
-        for (int i = 0; i < len; i++){
-            new_array[i] = array[i];
+    if (newLenght > lenght){
+        if (newLenght >= size){
+            T *new_array = new T[newLenght + ConstMemory];
+            for (int i = 0; i < lenght; i++){
+                new_array[i] = array[i];
+            }
+            delete[] array;
+            lenght = newLenght;
+            size = newLenght + ConstMemory;
+            array = new_array;
         }
-        delete[] array;
-        size = newSize;
-        array = new_array;
+        else{
+            lenght = newLenght;
+        }
         return;
     }// увеличение длины
 }
 
 template <class T>
-void DynamicArray<T>::Relen(int newLen){
-    if (newLen > size || newLen < 0 || newLen < len){throw IndexOutOfRange();}
-    len = newLen;
-}
-
-template <class T>
 DynamicArray<T>::DynamicArray() {
     array = nullptr;
-    len = 0;
+    lenght = 0;
     size = 0;
 }
 
@@ -64,7 +68,7 @@ template <class T>
 DynamicArray<T>::DynamicArray(T *items, int count) {
     array = nullptr;
     size = 0;
-    len = count;
+    lenght = 0;
 
     Resize(count);
     for (int i = 0; i < count; i++){
@@ -78,44 +82,47 @@ DynamicArray<T>::DynamicArray(int newSize){
 
     array = nullptr;
     size = 0;
-    len = 0;
+    lenght = 0;
     Resize(newSize);
 }
 
-template <class T>
-DynamicArray<T>::DynamicArray(DynamicArray<T> const &dynamicArray) {
-    array = nullptr;
-    size = 0;
-    len = dynamicArray.len;
-    Resize(dynamicArray.size);
-
-    for (int i = 0; i < len; i++){
-        array[i] = dynamicArray.array[i];
+template<class T>
+DynamicArray<T>::DynamicArray(int newLenght, int needSize){
+    if (newLenght < 0 || needSize < newLenght){
+        throw IndexOutOfRange();
     }
+
+    array = new T[needSize];
+    lenght = newLenght;
+    size = needSize;
 }
 
 template <class T>
 T& DynamicArray<T>::Get(int index) {
-    if (index < 0 || index >= len){throw IndexOutOfRange();}
+    if (index < 0 || index >= lenght){
+        throw IndexOutOfRange();
+    }
 
     return array[index];
 }
 
 template <class T>
-int DynamicArray<T>::GetSize() {
+void DynamicArray<T>::Set(int index, T value) {
+    if (index < 0 || index >= lenght){
+        throw IndexOutOfRange();
+    }
+
+    array[index] = value;
+}
+
+template <class T>
+int DynamicArray<T>::GetCountMemory() {
     return size;
 }
 
 template <class T>
-int DynamicArray<T>::GetLen() {
-    return len;
-}
-
-template <class T>
-void DynamicArray<T>::Set(int index, T value) {
-    if (index < 0 || index>= len){throw IndexOutOfRange();}
-
-    array[index] = value;
+int DynamicArray<T>::GetLenght() {
+    return lenght;
 }
 
 template <class T>
@@ -123,7 +130,7 @@ void DynamicArray<T> :: Delete_DynamicArray(){
     delete[] array;
     array = nullptr;
     size = 0;
-    len = 0;
+    lenght = 0;
 }
 
 template <class T>
@@ -131,5 +138,5 @@ DynamicArray<T> :: ~DynamicArray(){
     delete[] array;
     array = nullptr;
     size = 0;
-    len = 0;
+    lenght = 0;
 }

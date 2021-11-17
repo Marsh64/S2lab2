@@ -1,47 +1,63 @@
-#include <iostream>
+//
+// Created by adm on 24.10.2021.
+//
 
-#ifndef DynamicArray1
-#define DynamicArray1
+#ifndef S3_LABORATORY_WORK_2_DYNAMICARRAY_H
+#define S3_LABORATORY_WORK_2_DYNAMICARRAY_H
 
 template <class T>
 class DynamicArray {
 private:
     T* array;
-    int len; //длина массива
-    int size; //на сколько элементов массив расчитан - кол-во ячеек
+    int lenght; //на сколько элементов у пользователя есть доступ
+    int size; //на сколько элементов выделена память
 public:
     class IndexOutOfRange{};
 
-    //Создание объекта
-    DynamicArray(T* items, int count); //создает пустой массив и копирует элементы из переданного массива (получается идентичный по размеру массив)
-    explicit DynamicArray(int newSize); //создает пустой массив заданой длины
-    DynamicArray(DynamicArray<T> const &dynamicArray); //создание копии исходного масива
+    // Создание объект
     DynamicArray(); //создание пустого массива
+    DynamicArray(T* items, int count); //создает пустой массив и копирует элементы из исходного
+    explicit DynamicArray(int newSize); //создание пустого массива заданной длины
+    explicit DynamicArray(int newLenght, int needSize);//Создание массива заданной длины со свободным местом needSize - newLenght
+    DynamicArray(const DynamicArray& dynArr) {
+        size = dynArr.size;
+        lenght = dynArr.lenght;
+
+        array = new T[size];
+        for (int i = 0; i < lenght; i++) {
+            array[i] = dynArr.array[i];
+        }
+    }
 
     //Удаление объекта
-    ~DynamicArray();//деструктор
-    void Delete_DynamicArray();//операция удаления массива
+    ~DynamicArray(); //деструктор
+    void Delete_DynamicArray(); //удаление массива
 
     //Декомпозиция
-    T& Get(int index);//возвращает элемент по индексу
-    int GetSize(); //возвращает длину массива(кол-во всех ячеек)
-    int GetLen();//возвращает длину массива (кол-во заполненных ячеек)
+    T& Get(int index); //возвращает элемент по индексу
+    int GetCountMemory();//Общее число ячеек, под которые выделили память
+    int GetLenght();//Число ячеек, которые может использовать пользователь
 
-    //Операции над параметрами массивов
+
+    //Операции над параметрами массива
     void Set(int index, T value); //Задает элемент по индексу
-    void Resize(int newSize); //изменяет размерность массива
-    void Relen(int newLen); //Изменяет длину массива
+    void Resize(int newLenght); //Изменяет длину массива доступную пользователю
 
-    //Перегрузка операторов
     DynamicArray<T> &operator = (DynamicArray<T> dynamicArray) {
-        Resize(dynamicArray.GetSize());
-        size = dynamicArray.GetSize();
-        len = dynamicArray.GetLen();
-        for (int i = 0; i < len; i++){
-            array[i] = dynamicArray.array[i];
-        }
+        std::swap(array, dynamicArray.array);
+        size = dynamicArray.size;
+        lenght = dynamicArray.lenght;
         return *this;
+    }
+
+    T  &operator [](int index){
+        if (index < 0 || index >= lenght){
+            throw IndexOutOfRange();
+        }
+
+        return array[index];
     }
 };
 
-#endif
+
+#endif //S3_LABORATORY_WORK_2_DYNAMICARRAY_H

@@ -1,5 +1,9 @@
-#ifndef SEQUENCE
-#define SEQUENCE
+//
+// Created by adm on 01.11.2021.
+//
+
+#ifndef S3_LABORATORY_WORK_2_SEQUENCE_H
+#define S3_LABORATORY_WORK_2_SEQUENCE_H
 
 template <class T>
 class Sequence {
@@ -12,6 +16,8 @@ public:
     virtual int GetLength() = 0;//Получение длины последовательности
 
     //Операции
+    virtual T Pop() = 0;//Удаляет последний элемент в последовательности и возвращает его
+    virtual void Remove(int, int) = 0;//Удаляет элементы начиная с первого до второго не включительно
     virtual void Append(T item) = 0; //Добавление элемента в конец последовательности
     virtual void Prepend(T item) = 0; //Добавление элемента в начало последовательности
     virtual void InsertAt(T item, int index) = 0; //Вставка элемента в заданную позицию последовательности
@@ -19,4 +25,4 @@ public:
 };
 
 
-#endif
+#endif //S3_LABORATORY_WORK_2_SEQUENCE_H

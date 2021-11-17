@@ -1,7 +1,11 @@
-#ifndef ArraySequence_H
-#define ArraySequence_H
+//
+// Created by adm on 01.11.2021.
+//
+
+#ifndef S3_LABORATORY_WORK_2_ARRAYSEQUENCE_H
+#define S3_LABORATORY_WORK_2_ARRAYSEQUENCE_H
 #include "Sequence.h"
-#include "../Base/DynamicArray.h"
+#include "DynamicArray.h"
 
 template <class T>
 class ArraySequence : Sequence<T>{
@@ -64,40 +68,44 @@ public:
     }//Возвращает длину последовательности
 
     //Операции
-    void Append(T item){
-        int free_cells = dynamicArray.GetSize() - dynamicArray.GetLen();
-        if (free_cells == 0){
-            dynamicArray.Resize(dynamicArray.GetSize() + 200);
+    T Pop(){
+        if (dynamicArray.GetLenght() == 0)
+            return;
+
+        T item = dynamicArray[dynamicArray.GetLenght() - 1];
+        dynamicArray.Resize(dynamicArray.GetLenght() - 1);
+        return item;
+    }//Удаляет последний элемент в последовательности и возвращает его
+    void Remove(int from, int to){
+        if (from < 0 || from >= dynamicArray.length()) throw IndexOutOfRange();
+        if (to < 0 || to >= dynamicArray.length()) throw IndexOutOfRange();
+
+        if (from >= to) return;
+
+        for (int i = 0; i + to < dynamicArray.length(); i++) {
+            dynamicArray[i + from] = dynamicArray[i + to];
         }
-        dynamicArray.Relen(dynamicArray.GetLen() + 1);
-        dynamicArray.Set(dynamicArray.GetLen() - 1, item);
+        dynamicArray.Resize(dynamicArray.length() - to + from);
+    }//Удаляет с элемента с индексом from до элемента с индексом to не включительно
+    void Append(T item){
+        dynamicArray.Resize(dynamicArray.GetLenght() + 1);
+        dynamicArray[dynamicArray.GetLenght() - 1] = item;
     }//дабавляет элемент в конец последовательности(при необходимости выделяет доп. ячейки)
     void Prepend(T item){
-        dynamicArray.Resize(dynamicArray.GetLen() + 1);
-        dynamicArray.Relen(dynamicArray.GetLen() + 1);
-        T saved_cell = dynamicArray.Get(0);
-        T this_cell;
-        dynamicArray.Set(0, item);
-
-        for(int i = 1; i < dynamicArray.GetLen(); i++){
-            this_cell = dynamicArray.Get(i);
-            dynamicArray.Set(i, saved_cell);
-            saved_cell = this_cell;
+        dynamicArray.Resize(dynamicArray.GetLenght() + 1);
+        for (int i = dynamicArray.GetLenght() - 1; i > 0; i++){
+            dynamicArray[i] = dynamicArray[i - 1];
         }
+        dynamicArray[0] = item;
     }//Добавляет элемент в начало строки
     void InsertAt(T item, int index){
-        if (index < 0 || index >= this->GetLength()){throw IndexOutOfRange();}
+        if (index < 0 || index > this->GetLength()){throw IndexOutOfRange();}
 
-        dynamicArray.Resize(dynamicArray.GetLen() + 1);
-        dynamicArray.Relen(dynamicArray.GetLen() + 1);
-        T this_cell;
-        T saved_cell = dynamicArray.Get(index);
-        dynamicArray.Set(index, item);
-        for (int i = index + 1; i < dynamicArray.GetLen(); i++){
-            this_cell = dynamicArray.Get(i);
-            dynamicArray.Set(i, saved_cell);
-            saved_cell = this_cell;
+        dynamicArray.Resize(dynamicArray.GetLenght() + 1);
+        for (int i = dynamicArray.GetLenght() - 1; i > index; i++){
+            dynamicArray[i] = dynamicArray[i - 1];
         }
+        dynamicArray[index] = item;
     }//Вставляет элемент по заданному индексу
     ArraySequence<T>* Concat(Sequence<T> *list){
         auto *new_arraySequence = new ArraySequence<T>;
@@ -106,7 +114,7 @@ public:
         for (int i = 0; i < dynamicArray.GetLen(); i++){
             new_arraySequence->Append(dynamicArray.Get(i));
         }
-        for (int i = 0; i < list->GetLength(); i++){
+        for (int i = dynamicArray.GetLenght(); i < list->GetLength() + dynamicArray.GetLenght(); i++){
             new_arraySequence->Append(list->Get(i));
         }
 
@@ -118,6 +126,13 @@ public:
         dynamicArray = n_dynamicArray.dynamicArray;
         return *this;
     }
+
+    T &operator[](int index) {
+        if (index < 0 || index >= GetLength())
+            throw IndexOutOfRange();
+        return dynamicArray[index];
+    }
 };
 
-#endif
+
+#endif //S3_LABORATORY_WORK_2_ARRAYSEQUENCE_H
